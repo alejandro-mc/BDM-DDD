@@ -11,6 +11,6 @@ HD=hadoop
 SP=spark-submit
 
 $HD fs -rm -r -skipTrash $OUTPUT
-$SP --name "$NAME" --num-executors $NUM_EXECS --files $APPLICATION $INPUT $OUTPUT
+$SP --name "$NAME" --num-executors $NUM_EXECS $APPLICATION $INPUT $OUTPUT
 rm -f $LOCAL_OUTPUT
 $HD fs -cat $OUTPUT/part*  | tr -d '() ' > $LOCAL_OUTPUT

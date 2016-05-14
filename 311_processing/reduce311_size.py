@@ -1,6 +1,5 @@
 import sys
 import pyspark
-import operator
 import csv
 import itertools
 
@@ -93,8 +92,13 @@ class CSVParser():
 #**************** END OF AUXILIARY CODE *********************************
 ###############################################################################
 
-def calls_per_time_of_day(record):
-    return record[1].strip().split(" ")[1].split(":")[0] + " " + record[1].strip().split(" ")[2].split("'")[0], 1
+def filter_noise(record):
+    if 'NOISE' in record[5].upper():
+        return record
+
+# record[0] = id, record[1] = time, record[6] = description, record[52] = (lat, long)
+def reduce_data_size(record):
+    return record[0], record[1], record[6], record[52]
 
 if __name__=='__main__':
     if len(sys.argv)<3:
@@ -106,6 +110,5 @@ if __name__=='__main__':
     noise_data = sc.textFile(','.join(sys.argv[1:-1]), use_unicode=False).cache()
     rdd_input = csvRDD(noise_data)
 
-    calls_per_time_day = rdd_input.map(lambda s: calls_per_time_of_day(s)).reduceByKey(operator.add)
-
-    calls_per_time_day.saveAsTextFile(sys.argv[-1])
+    reduced_data = rdd_input.filter(lambda r: filter_noise(r)).map((lambda s: reduce_data_size(s)))
+    reduced_data.saveAsTextFile(sys.argv[-1])
