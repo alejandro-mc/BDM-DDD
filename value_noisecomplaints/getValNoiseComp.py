@@ -23,6 +23,9 @@ import sys
 def mapToLots(records):
     import rtree
     import csv
+    import os
+    os.chmod('plutoindex.idx',0777)
+    os.chmod('plutoindex.dat',0777)
     file_index = rtree.index.Rtree('plutoindex')
     for record in records:
         list_record=[]
