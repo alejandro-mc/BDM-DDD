@@ -26,15 +26,16 @@ def main():
         lot = csv.reader([line])
         for lst in lot:
             lot = lst
-        if len(lot) < 47:
+        if len(lot) < 59:
            continue
         if lot[0] =='Borough':
            continue
-        if all((lot[1].strip(),lot[2].strip(),lot[46].strip())):
+        if all((lot[1].strip(),lot[2].strip(),lot[46].strip(),lot[58].strip())):
            block_number = int(lot[1].strip())
            lot_number   = int(lot[2].strip())
            res_units    = int(lot[46].strip())
-           dict_blocklot_resunits[(block_number,lot_number)] = res_units
+           prop_value   = int(lot[58].strip())
+           dict_blocklot_resunits[(block_number,lot_number)] = (res_units,prop_value)
 
     #picle the dictionary
     with open(sys.argv[2],'wb') as out:
