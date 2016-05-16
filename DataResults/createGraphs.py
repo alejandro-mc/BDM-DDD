@@ -9,10 +9,29 @@ import pandas as pd
 
 
 
-#histogram noise complaints per lot
-#sns.set_style()
-#compData = pd.read_csv('')
-#complaints = sns.barplot()
+#ScatterPlot Property Value vs noise complaints per unit  
+sns.set_style("whitegrid")
+compData = pd.read_csv('propvalue_vs_noise_per_resunit.csv')
+
+complaints = sns.lmplot(x="propertyValue", y="callsperunit", data=compData, fit_reg=False)
+complaints.set(yscale= "log")
+sns.plt.show()
+
+#ScatterPlot Property Value vs construction complaints per unit  
+sns.set_style("whitegrid")
+compData = pd.read_csv('val_vs_constcomp.csv')
+
+complaints = sns.lmplot(x="propertyValue", y="callsperunit", data=compData, fit_reg=False)
+complaints.set(yscale= "log")
+sns.plt.show()
+
+#ScatterPlot Property Value vs party complaints per unit  
+sns.set_style("whitegrid")
+compData = pd.read_csv('value_vs_partycomp.csv')
+
+complaints = sns.lmplot(x="propertyValue", y="callsperunit", data=compData, fit_reg=False)
+complaints.set(yscale= "log")
+sns.plt.show()
 
 
 #Histogram for the values of time of day vs. number of calls
